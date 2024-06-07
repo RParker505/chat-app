@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, ImageBackground, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TextInput, ImageBackground, TouchableOpacity, Image } from 'react-native';
 import backgroundImage from '../assets/background.png';
 
 const Start = ({ navigation }) => {
@@ -16,6 +16,7 @@ const Start = ({ navigation }) => {
     >
       <Text style={styles.appTitle}>React Chat App</Text>
       <View style={styles.signinBox}>
+        {/* <Image source={require('../assets/icon.png')} style={styles.icon} /> */}
         <TextInput
             style={styles.textInput}
             value={name}
@@ -62,15 +63,21 @@ const styles = StyleSheet.create({
   fontWeight: '600',
   color: '#FFFFFF'
  },
-signinBox: {
-  // backgroundColor: '#ffffff', 
+signinBox: { 
+  // flexDirection: 'row',
   backgroundColor: '#f2f2f2',
   borderRadius: 4,
+  padding: 5,
   width: '88%',
   height: '50%', 
   alignItems: 'center',
   justifyContent: 'space-around', 
 },
+// icon: {
+//   marginRight: 10,
+//   height: 16,
+//   width: 16
+// },
 chooseColor: {
   fontSize: 16,
   fontWeight: '300',
