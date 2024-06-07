@@ -14,36 +14,34 @@ const Start = ({ navigation }) => {
       resizeMode="cover"
       style={styles.backgroundImage}
     >
-      <View style={styles.container}>
-        <Text style={styles.appTitle}>React Chat App</Text>
-        <View style={styles.signinBox}>
-          <TextInput
-              style={styles.textInput}
-              value={name}
-              onChangeText={setName}
-              placeholder='Your name'
+      <Text style={styles.appTitle}>React Chat App</Text>
+      <View style={styles.signinBox}>
+        <TextInput
+            style={styles.textInput}
+            value={name}
+            onChangeText={setName}
+            placeholder='Your name'
+          />
+        <Text style={styles.chooseColor}>Choose a Background Color</Text>
+        <View style={styles.buttonColorBox}>
+          {colors.map((color, index) => (
+            <TouchableOpacity
+              key={index}
+              style={[
+                styles.colorButton,
+                { backgroundColor: color },
+                background === color && styles.selectedColor,
+              ]}
+              onPress={() => setBackground(color)}
             />
-          <Text style={styles.chooseColor}>Choose a Background Color</Text>
-          <View style={styles.buttonColorBox}>
-            {colors.map((color, index) => (
-              <TouchableOpacity
-                key={index}
-                style={[
-                  styles.colorButton,
-                  { backgroundColor: color },
-                  background === color && styles.selectedColor,
-                ]}
-                onPress={() => setBackground(color)}
-              />
-            ))}
-          </View>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate('Chat', { name: name, background: background})}
-          >
-            <Text style={styles.buttonText}>Start Chatting</Text>
-          </TouchableOpacity>
+          ))}
         </View>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('Chat', { name: name, background: background})}
+        >
+          <Text style={styles.buttonText}>Start Chatting</Text>
+        </TouchableOpacity>
       </View>
     </ImageBackground>
  );
@@ -53,9 +51,9 @@ const styles = StyleSheet.create({
  backgroundImage: {
   flex: 1,
   justifyContent: 'center',
-  alignItems: 'center',
-  width: '100%',
-  height: '100%',
+  // alignItems: 'center',
+  // width: '100%',
+  // height: '100%',
  },
  container: {
   flex: 1,
