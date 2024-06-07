@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, ImageBackground, TouchableOpacity } from 'react-native';
-import { Image } from '../assets/background-image.png';
+import backgroundImage from '../assets/background.png';
 
 const Start = ({ navigation }) => {
 
@@ -10,7 +10,7 @@ const Start = ({ navigation }) => {
 
  return (
     <ImageBackground
-      source={Image}
+      source={backgroundImage}
       resizeMode="cover"
       style={styles.backgroundImage}
     >
@@ -48,17 +48,12 @@ const Start = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
- container: {
-   flex: 1,
-   justifyContent: "center",
-   alignItems: "center"
- },
  backgroundImage: {
   flex: 1,
+  justifyContent: 'center',
   alignItems: 'center',
-  justifyContent: 'center', 
-  height: '100%',
   width: '100%',
+  height: '100%',
  },
  appTitle: {
   flex: 1,
