@@ -16,7 +16,6 @@ const Start = ({ navigation }) => {
     >
       <Text style={styles.appTitle}>React Chat App</Text>
       <View style={styles.signinBox}>
-        {/* <Image source={require('../assets/icon.png')} style={styles.icon} /> */}
         <TextInput
             style={styles.textInput}
             value={name}
@@ -64,7 +63,6 @@ const styles = StyleSheet.create({
   color: '#FFFFFF'
  },
 signinBox: { 
-  // flexDirection: 'row',
   backgroundColor: '#f2f2f2',
   borderRadius: 4,
   padding: 5,
@@ -73,11 +71,6 @@ signinBox: {
   alignItems: 'center',
   justifyContent: 'space-around', 
 },
-// icon: {
-//   marginRight: 10,
-//   height: 16,
-//   width: 16
-// },
 chooseColor: {
   fontSize: 16,
   fontWeight: '300',
