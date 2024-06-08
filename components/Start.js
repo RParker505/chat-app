@@ -72,9 +72,10 @@ signinBox: {
   borderRadius: 4,
   padding: 5,
   width: '88%',
-  height: '50%', 
+  height: '44%', 
   alignItems: 'center',
-  justifyContent: 'space-around', 
+  justifyContent: 'space-around',
+  marginBottom: 25 
 },
 chooseColor: {
   fontSize: 16,
