@@ -14,7 +14,7 @@ const Start = ({ navigation }) => {
       resizeMode="cover"
       style={styles.backgroundImage}
     >
-      <Text style={styles.appTitle}>React Chat App</Text>
+      <Text style={styles.appTitle}>ChitChat</Text>
       <View style={styles.signinBox}>
         <TextInput
             style={styles.textInput}
