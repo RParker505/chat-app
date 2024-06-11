@@ -12,20 +12,64 @@ const onSend = (newMessages) => {
   setMessages(previousMessages => GiftedChat.append(previousMessages, newMessages))
 }
 
+//set bubble colors to contrast chosen background color
+const getBubbleColors = (background) => {
+  switch (background) {
+    case '#090C08':
+    case '#474056':
+      return {
+        leftBubbleBackground: '#FFFFFF', // white bubble for incoming messages
+        leftBubbleText: '#000000',       // black text on white bubble
+        rightBubbleBackground: '#0000FF', // bright blue bubble for outgoing messages
+        rightBubbleText: '#FFFFFF',      // white text on blue bubble
+      };
+    case '#8A95A5':
+    case '#B9C6AE':
+      return {
+        leftBubbleBackground: '#FFFFFF', // white bubble for incoming messages
+        leftBubbleText: '#000000',       // black text on white bubble
+        rightBubbleBackground: '#000000', // black bubble for outgoing messages
+        rightBubbleText: '#FFFFFF',      // white text on black bubble
+      };
+    default:
+      return {
+        leftBubbleBackground: '#FFFFFF',
+        leftBubbleText: '#000000',
+        rightBubbleBackground: '#000000',
+        rightBubbleText: '#FFFFFF',
+      };
+  }
+};
+
+const {
+  leftBubbleBackground,
+  leftBubbleText,
+  rightBubbleBackground,
+  rightBubbleText
+} = getBubbleColors(background);
+
 // change default colors of sender and receiver bubbles
 const renderBubble = (props) => {
   return <Bubble
     {...props}
     wrapperStyle={{
-      right: {
-        backgroundColor: "#000"
-      },
       left: {
-        backgroundColor: "#FFF"
-      }
+        backgroundColor: leftBubbleBackground,
+      },
+      right: {
+        backgroundColor: rightBubbleBackground,
+      },
+    }}
+    textStyle={{
+      left: {
+        color: leftBubbleText,
+      },
+      right: {
+        color: rightBubbleText,
+      },
     }}
   />
-}
+};
 
 //  Called right after the Chat component mounts
  useEffect(() => {
