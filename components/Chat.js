@@ -47,7 +47,7 @@ const renderBubble = (props) => {
       system: true,
     },
   ]);
-}, []);
+}, [name]); //ensure effect runs when the user name changes
 
 useEffect(() => {
   navigation.setOptions({ title: name });
