@@ -145,6 +145,10 @@ colorButton: {
   borderRadius: 25,
   margin: 5
 },
+selectedColor:{
+  borderColor: '#19b9bf',
+  borderWidth: 4,
+},
 button: {
   alignItems: 'center',
   backgroundColor: '#757083',
