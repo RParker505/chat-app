@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, KeyboardAvoidingView, Platform } from 'react-native';
-import { GiftedChat, Bubble } from "react-native-gifted-chat";
+import { GiftedChat, Bubble, SystemMessage } from "react-native-gifted-chat";
 
 const Chat = ({route, navigation}) => {
 
@@ -22,6 +22,7 @@ const getBubbleColors = (background) => {
         leftBubbleText: '#000000',       // black text on white bubble
         rightBubbleBackground: '#0000FF', // bright blue bubble for outgoing messages
         rightBubbleText: '#FFFFFF',      // white text on blue bubble
+        systemMessageColor: '#FFFFFF',   // white text for system message
       };
     case '#8A95A5':
     case '#B9C6AE':
@@ -30,6 +31,7 @@ const getBubbleColors = (background) => {
         leftBubbleText: '#000000',       // black text on white bubble
         rightBubbleBackground: '#000000', // black bubble for outgoing messages
         rightBubbleText: '#FFFFFF',      // white text on black bubble
+        systemMessageColor: '#000000',   // black text for system message
       };
     default:
       return {
@@ -37,6 +39,7 @@ const getBubbleColors = (background) => {
         leftBubbleText: '#000000',
         rightBubbleBackground: '#000000',
         rightBubbleText: '#FFFFFF',
+        systemMessageColor: '#000000',
       };
   }
 };
@@ -45,7 +48,8 @@ const {
   leftBubbleBackground,
   leftBubbleText,
   rightBubbleBackground,
-  rightBubbleText
+  rightBubbleText,
+  systemMessageColor
 } = getBubbleColors(background);
 
 // change default colors of sender and receiver bubbles
@@ -70,6 +74,13 @@ const renderBubble = (props) => {
     }}
   />
 };
+
+const renderSystemMessage = (props) => (
+  <SystemMessage
+    {...props}
+    textStyle={{ color: systemMessageColor }}
+  />
+);
 
 //  Called right after the Chat component mounts
  useEffect(() => {
@@ -102,6 +113,7 @@ useEffect(() => {
     <GiftedChat
       messages={messages}
       renderBubble={renderBubble}
+      renderSystemMessage={renderSystemMessage}
       onSend={messages => onSend(messages)}
       user={{
         _id: 1
