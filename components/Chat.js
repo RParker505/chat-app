@@ -119,7 +119,7 @@ useEffect(() => {
         _id: 1
       }}
     />
-    { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null } 
+    { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : <KeyboardAvoidingView behavior="padding" /> } 
     {/* if OS is Android, add KeyboardAvoidingView */}
   </View>
   )
