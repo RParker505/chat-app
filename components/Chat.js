@@ -113,7 +113,8 @@ const renderBubble = (props) => {
       renderSystemMessage={renderSystemMessage}
       onSend={messages => onSend(messages)}
       user={{
-        _id: 1
+        _id: userID,
+        name: name
       }}
     />
     { <KeyboardAvoidingView behavior={Platform.OS === 'android' ? "height": "padding"} /> }
