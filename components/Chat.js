@@ -10,10 +10,39 @@ const [messages, setMessages] = useState([]);
 
 // Called when a user sends a message, appends new message to newMessages array, which is then appended to original list of messages
 const onSend = (newMessages) => {
-  setMessages(previousMessages => GiftedChat.append(previousMessages, newMessages))
+  addDoc(collection(db, "messages"), newMessages[0])
 }
 
-//set bubble colors to contrast chosen background color
+const renderSystemMessage = (props) => (
+  <SystemMessage
+    {...props}
+    textStyle={{ color: systemMessageColor }}
+  />
+);
+
+//  Query to get the "messages" collection from the Firestore database
+ useEffect(() => {
+  navigation.setOptions({ title: name });
+  const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
+  const unsubMessages = onSnapshot(q, (docs) => {
+    // Initialize an empty array to store the new messages
+    let newMessages = [];
+    // Iterate through each document in the snapshot
+    docs.forEach(doc => {
+      newMessages.push({
+        id: doc.id,
+        ...doc.data(),
+        createdAt: new Date(doc.data().createdAt.toMillis())
+      })
+    })
+    setMessages(newMessages);
+  })
+  return () => {
+    if (unsubMessages) unsubMessages();
+  }
+ }, []);
+
+ //set bubble colors to contrast chosen background color
 const getBubbleColors = (background) => {
   switch (background) {
     case '#090C08':
@@ -75,35 +104,6 @@ const renderBubble = (props) => {
     }}
   />
 };
-
-const renderSystemMessage = (props) => (
-  <SystemMessage
-    {...props}
-    textStyle={{ color: systemMessageColor }}
-  />
-);
-
-//  Query to get the "messages" collection from the Firestore database
- useEffect(() => {
-  navigation.setOptions({ title: name });
-  const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
-  const unsubMessages = onSnapshot(q, (docs) => {
-    // Initialize an empty array to store the new messages
-    let newMessages = [];
-    // Iterate through each document in the snapshot
-    docs.forEach(doc => {
-      newMessages.push({
-        id: doc.id,
-        ...doc.data(),
-        createdAt: new Date(doc.data().createdAt.toMillis())
-      })
-    })
-    setMessages(newMessages);
-  })
-  return () => {
-    if (unsubMessages) unsubMessages();
-  }
- }, []);
 
  return (
   <View style={[styles.container, { backgroundColor: background }]}>
