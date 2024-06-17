@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, KeyboardAvoidingView, Platform } from 'react-native';
 import { GiftedChat, Bubble, SystemMessage } from "react-native-gifted-chat";
+import { collection, getDocs, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
 
-const Chat = ({route, navigation}) => {
+const Chat = ({route, navigation, db}) => {
 
-const { name, background } = route.params;
+const { name, background, userID } = route.params;
 const [messages, setMessages] = useState([]);
 
 // Called when a user sends a message, appends new message to newMessages array, which is then appended to original list of messages
@@ -82,31 +83,27 @@ const renderSystemMessage = (props) => (
   />
 );
 
-//  Called right after the Chat component mounts
+//  Query to get the "messages" collection from the Firestore database
  useEffect(() => {
-  setMessages([
-    {
-      _id: 1,
-      text: "Hello developer",
-      createdAt: new Date(),
-      user: {
-        _id: 2,
-        name: "React Native",
-        avatar: "https://placeimg.com/140/140/any",
-      },
-    },
-    {
-      _id: 2,
-      text: `${name} has entered the chat`,
-      createdAt: new Date(),
-      system: true,
-    },
-  ]);
-}, [name]); //ensure effect runs when the user name changes
-
-useEffect(() => {
   navigation.setOptions({ title: name });
-}, []);
+  const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
+  const unsubMessages = onSnapshot(q, (docs) => {
+    // Initialize an empty array to store the new messages
+    let newMessages = [];
+    // Iterate through each document in the snapshot
+    docs.forEach(doc => {
+      newMessages.push({
+        id: doc.id,
+        ...doc.data(),
+        createdAt: new Date(doc.data().createdAt.toMillis())
+      })
+    })
+    setMessages(newMessages);
+  })
+  return () => {
+    if (unsubMessages) unsubMessages();
+  }
+ }, []);
 
  return (
   <View style={[styles.container, { backgroundColor: background }]}>
