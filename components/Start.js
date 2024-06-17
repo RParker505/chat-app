@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, ImageBackground, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { getAuth, signInAnonymously } from "firebase/auth";
 
 const TextInputWithIcon = ({ iconName, iconSize, iconColor, style, ...props }) => {
   return (
@@ -44,6 +45,18 @@ const Start = ({ navigation }) => {
  const [name, setName] = useState('');
  const [background, setBackground] = useState('');
  const colors = ['#090C08', '#474056', '#8A95A5', '#B9C6AE'];
+ const auth = getAuth();
+
+ const signInUser = () => {
+   signInAnonymously(auth)
+     .then(result => {
+       navigation.navigate("Chat", { userID: result.user.uid, name: name, background: background });
+       Alert.alert("Signed in Successfully!");
+     })
+     .catch((error) => {
+       Alert.alert("Unable to sign in, try later again.");
+     })
+ }
 
  return (
     <ImageBackground
@@ -89,7 +102,7 @@ const Start = ({ navigation }) => {
               accessibilityRole="button"
               accessibilityHint="Press to enter the chat room"
               style={styles.button}
-              onPress={() => navigation.navigate('Chat', { name: name, background: background})}
+              onPress={signInUser}
             >
               <Text style={styles.buttonText}>Start Chatting</Text>
             </TouchableOpacity>
