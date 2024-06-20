@@ -7,6 +7,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { initializeApp } from "firebase/app";
 import { getFirestore, disableNetwork, enableNetwork } from "firebase/firestore";
+import { useNetInfo } from '@react-native-community/netinfo';
+import { useEffect } from 'react';
 
 // Create the navigator
 const Stack = createNativeStackNavigator();
