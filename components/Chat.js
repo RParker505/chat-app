@@ -3,7 +3,7 @@ import { StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { GiftedChat, Bubble, SystemMessage } from "react-native-gifted-chat";
 import { collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
 
-const Chat = ({route, navigation, db}) => {
+const Chat = ({route, navigation, db, isConnected}) => {
 
 const { name, background, userID } = route.params;
 const [messages, setMessages] = useState([]);
@@ -20,11 +20,20 @@ const renderSystemMessage = (props) => (
   />
 );
 
+let unsubMessages;
+
 //  Query to get the "messages" collection from the Firestore database
- useEffect(() => {
+useEffect(() => {
+if (isConnected === true) {
+  
+  // unregister current onSnapshot() listener to avoid registering multiple listeners when
+  // useEffect code is re-executed.
+  if (unsubMessages) unsubMessages();
+  unsubMessages = null;
+
   navigation.setOptions({ title: name });
   const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
-  const unsubMessages = onSnapshot(q, (docs) => {
+  unsubMessages = onSnapshot(q, (docs) => {
     // Initialize an empty array to store the new messages
     let newMessages = [];
     // Iterate through each document in the snapshot
@@ -34,13 +43,30 @@ const renderSystemMessage = (props) => (
         ...doc.data(),
         createdAt: new Date(doc.data().createdAt.toMillis())
       })
-    })
+    });
+    cacheMessages(newMessages);
     setMessages(newMessages);
-  })
+  });
+} else loadCachedMessages();
+
+  // Clean up code
   return () => {
     if (unsubMessages) unsubMessages();
   }
- }, []);
+}, [isConnected]); // Call the callback of useEffect whenewer the isConnected prop's value changes.
+
+const loadCachedMessages = async () => {
+  const cachedMessages = await AsyncStorage.getItem("chat_messages") || [];
+  setLists(JSON.parse(cachedMessages));
+}
+
+const cacheMessages = async (messagesToCache) => {
+  try {
+    await AsyncStorage.setItem('chat_messages', JSON.stringify(messagesToCache));
+  } catch (error) {
+    console.log(error.message);
+  }
+}
 
  //set bubble colors to contrast chosen background color
 const getBubbleColors = (background) => {
