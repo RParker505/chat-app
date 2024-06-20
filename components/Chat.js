@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
-import { GiftedChat, Bubble, SystemMessage } from "react-native-gifted-chat";
+import { GiftedChat, Bubble, SystemMessage, InputToolbar } from "react-native-gifted-chat";
 import { collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
 
 const Chat = ({route, navigation, db, isConnected}) => {
@@ -58,7 +58,7 @@ if (isConnected === true) {
 const loadCachedMessages = async () => {
   const cachedMessages = await AsyncStorage.getItem("chat_messages") || [];
   setLists(JSON.parse(cachedMessages));
-}
+};
 
 const cacheMessages = async (messagesToCache) => {
   try {
@@ -66,7 +66,13 @@ const cacheMessages = async (messagesToCache) => {
   } catch (error) {
     console.log(error.message);
   }
-}
+};
+
+// Do not render InputToolbar if no internet connection
+const renderInputToolbar = (props) => {
+  if (isConnected) return <InputToolbar {...props} />;
+  else return null;
+ };
 
  //set bubble colors to contrast chosen background color
 const getBubbleColors = (background) => {
@@ -136,6 +142,7 @@ const renderBubble = (props) => {
     <GiftedChat
       messages={messages}
       renderBubble={renderBubble}
+      renderInputToolbar={renderInputToolbar}
       renderSystemMessage={renderSystemMessage}
       onSend={messages => onSend(messages)}
       user={{
