@@ -2,7 +2,10 @@ import { TouchableOpacity, Text, View, StyleSheet } from "react-native";
 
 const CustomActions = ({wrapperStyle, iconTextStyle}) => {
 
-    const onActionPress = () => {}
+    const onActionPress = () => {
+        const options = ['Choose From Library', 'Take Picture', 'Send Location', 'Cancel'];
+        const cancelButtonIndex = options.length - 1;
+    }
 
     return (
         <TouchableOpacity style={styles.container} onPress={onActionPress}>
