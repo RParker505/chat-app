@@ -1,6 +1,9 @@
 import { TouchableOpacity, Text, View, StyleSheet } from "react-native";
+import { useActionSheet } from '@expo/react-native-action-sheet';
 
 const CustomActions = ({wrapperStyle, iconTextStyle}) => {
+
+    const actionSheet = useActionSheet();
 
     const onActionPress = () => {
         const options = ['Choose From Library', 'Take Picture', 'Send Location', 'Cancel'];
