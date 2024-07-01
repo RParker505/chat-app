@@ -3,6 +3,7 @@ import { StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { GiftedChat, Bubble, SystemMessage, InputToolbar } from "react-native-gifted-chat";
 import { collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CustomActions from './CustomActions';
 
 const Chat = ({route, navigation, db, isConnected}) => {
 
@@ -138,6 +139,10 @@ const renderBubble = (props) => {
   />
 };
 
+const renderCustomActions = (props) => {
+  return <CustomActions {...props} />;
+};
+
  return (
   <View style={[styles.container, { backgroundColor: background }]}>
     <GiftedChat
@@ -145,6 +150,7 @@ const renderBubble = (props) => {
       renderBubble={renderBubble}
       renderInputToolbar={renderInputToolbar}
       renderSystemMessage={renderSystemMessage}
+      renderActions={renderCustomActions}
       onSend={messages => onSend(messages)}
       user={{
         _id: userID,
