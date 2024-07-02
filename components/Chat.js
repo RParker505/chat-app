@@ -4,6 +4,7 @@ import { GiftedChat, Bubble, SystemMessage, InputToolbar } from "react-native-gi
 import { collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomActions from './CustomActions';
+import MapView from 'react-native-maps';
 
 const Chat = ({route, navigation, db, isConnected}) => {
 
