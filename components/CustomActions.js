@@ -43,6 +43,12 @@ const CustomActions = ({wrapperStyle, iconTextStyle, onSend, storage, userID}) =
       });
     }
 
+    const generateReference = (uri) => {
+      const timeStamp = (new Date()).getTime();
+      const imageName = uri.split("/")[uri.split("/").length - 1];
+      return `${userID}-${timeStamp}-${imageName}`;
+    }
+
     const pickImage = async () => {
         let permissions = await ImagePicker.requestMediaLibraryPermissionsAsync();
         
@@ -61,12 +67,6 @@ const CustomActions = ({wrapperStyle, iconTextStyle, onSend, storage, userID}) =
           if (!result.canceled) await uploadAndSendImage(result.assets[0].uri);
           else Alert.alert("Permissions haven't been granted.");
         }
-      }
-
-      const generateReference = (uri) => {
-        const timeStamp = (new Date()).getTime();
-        const imageName = uri.split("/")[uri.split("/").length - 1];
-        return `${userID}-${timeStamp}-${imageName}`;
       }
     
       const getLocation = async () => {
