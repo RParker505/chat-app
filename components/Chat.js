@@ -141,7 +141,7 @@ const renderBubble = (props) => {
 };
 
 const renderCustomActions = (props) => {
-  return <CustomActions {...props} />;
+  return <CustomActions storage={storage} {...props} />;
 };
 
 const renderCustomView = (props) => {
