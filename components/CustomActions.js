@@ -46,6 +46,7 @@ const CustomActions = ({wrapperStyle, iconTextStyle, onSend, storage, userID}) =
             uploadBytes(newUploadRef, blob).then(async (snapshot) => {
               console.log('File has been uploaded successfully');
               const imageURL = await getDownloadURL(snapshot.ref)
+              onSend({ image: imageURL })
             })
           } else Alert.alert("Permissions haven't been granted.");
         }
