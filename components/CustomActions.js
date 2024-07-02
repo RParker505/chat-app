@@ -3,7 +3,7 @@ import { useActionSheet } from '@expo/react-native-action-sheet';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
 
-const CustomActions = ({wrapperStyle, iconTextStyle, onSend}) => {
+const CustomActions = ({wrapperStyle, iconTextStyle, onSend, storage}) => {
 
     const actionSheet = useActionSheet();
 
