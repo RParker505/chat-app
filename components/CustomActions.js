@@ -2,7 +2,7 @@ import { TouchableOpacity, Text, View, StyleSheet, Alert } from "react-native";
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
-import { ref, uploadBytes } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const CustomActions = ({wrapperStyle, iconTextStyle, onSend, storage, userID}) => {
 
@@ -45,6 +45,7 @@ const CustomActions = ({wrapperStyle, iconTextStyle, onSend, storage, userID}) =
             const newUploadRef = ref(storage, uniqueRefString);
             uploadBytes(newUploadRef, blob).then(async (snapshot) => {
               console.log('File has been uploaded successfully');
+              const imageURL = await getDownloadURL(snapshot.ref)
             })
           } else Alert.alert("Permissions haven't been granted.");
         }
