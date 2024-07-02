@@ -90,7 +90,7 @@ const CustomActions = ({wrapperStyle, iconTextStyle, onSend, storage, userID}) =
           style={styles.container}
           accessible={true}
           accessibilityRole="button"
-          accessibilityHint="See more chat options"
+          accessibilityHint="Choose to share photo or your location in chat or cancel to close the menu"
           onPress={onActionPress}
         >
             <View style={[styles.wrapper, wrapperStyle]}>
