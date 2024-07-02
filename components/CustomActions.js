@@ -4,7 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
 import { ref, uploadBytes } from 'firebase/storage';
 
-const CustomActions = ({wrapperStyle, iconTextStyle, onSend, storage}) => {
+const CustomActions = ({wrapperStyle, iconTextStyle, onSend, storage, userID}) => {
 
     const actionSheet = useActionSheet();
 
@@ -39,9 +39,10 @@ const CustomActions = ({wrapperStyle, iconTextStyle, onSend, storage}) => {
           let result = await ImagePicker.launchImageLibraryAsync();
           if (!result.canceled) {
             const imageURI = result.assets[0].uri;
+            const uniqueRefString = generateReference(imageURI);
             const response = await fetch(imageURI);
             const blob = await response.blob();
-            const newUploadRef = ref(storage, 'image123');
+            const newUploadRef = ref(storage, uniqueRefString);
             uploadBytes(newUploadRef, blob).then(async (snapshot) => {
               console.log('File has been uploaded successfully');
             })
@@ -58,6 +59,12 @@ const CustomActions = ({wrapperStyle, iconTextStyle, onSend, storage}) => {
             console.log('uploading and uploading the image occurs here');
           } else Alert.alert("Permissions haven't been granted.");
         }
+      }
+
+      const generateReference = (uri) => {
+        const timeStamp = (new Date()).getTime();
+        const imageName = uri.split("/")[uri.split("/").length - 1];
+        return `${userID}-${timeStamp}-${imageName}`;
       }
     
       const getLocation = async () => {
