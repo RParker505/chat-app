@@ -9,7 +9,7 @@ const CustomActions = ({wrapperStyle, iconTextStyle, onSend, storage, userID}) =
     const actionSheet = useActionSheet();
 
     const onActionPress = () => {
-        const options = ['Choose From Library', 'Take Picture', 'Send Location', 'Cancel'];
+        const options = ['Select image from library', 'Take a photo', 'Share location', 'Cancel'];
         const cancelButtonIndex = options.length - 1;
         actionSheet.showActionSheetWithOptions(
             {
