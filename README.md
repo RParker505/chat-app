@@ -15,6 +15,15 @@ To build a chat app for mobile devices using React Native. The app provides user
 - A page displaying the conversation, as well as an input field and submit button.
 - Provide users with two additional communication features: sending images (either from device library or device camera) and location data.
 - Data gets stored online and offline, allowing users to access the chat and previous messages even when they are offline.
+## Technologies
+- React Native
+- Expo and Expo Go App
+- Google Firestore Database
+## Libraries
+- Gifted Chat library
+- Expo ImagePicker
+- Expo MediaLibrary
+- Expo Location
 ## Dependencies
 - "@expo/metro-runtime": "~3.2.1",
 - "@react-native-async-storage/async-storage": "1.23.1",
@@ -38,17 +47,58 @@ To build a chat app for mobile devices using React Native. The app provides user
 ## Installation
 - Clone this repository
 - Install Node.js. _To avoid any potential conflicts, it is recommended to use version 16.19.0._
-- Install Expo by running __npm install -g expo-cli__ in the terminal
-- Navigate to the chat-app folder and run __npm install__
+  ```
+  nvm install 16.19.0
+  nvm use 16.19.0
+  nvm alias default 16.19.0
+  ```
+- Install Expo in the terminal
+  ```
+  npm install -g expo-cli
+  ```
+- Navigate to the chat-app directory and install all dependencies
+  ```
+  npm install
+  ```
 - Set up Firebase for your project:
-  - Sign in at Google Firebase
-  - Create a project
-  - Set up Firestore Database (select "production mode")
-  - On the "Rules" tab, adjust "allow read, write: if false;" to "allow read, write: if __true__;"
-  - Register app(</>) in Project Overview
-- Navigate to the chat-app folder in the terminal and install Firebase using __npm install firebase__
-- Initialize Firebase by copying and pasting the provided Firebase configuration into App.js
-- Download the Expo Go app on your mobile device (or an emulator like Android Studio) and open
+  - Sign in at firebase.google.com
+  - "Create a project" or "Add new project" if this is not your first project.
+  - Give your project a name, for example, "chat-app."
+  - Enable or disable Google Analytics for this project. (For this project, I disabled Analytics)
+- Create a Database to store the messages for your app
+  - Use left-hand menu to build a database
+    ```
+    Build > Firestore Database > Create Database Button
+    ```
+  - Select a location for storing the data (messages)
+    - Database ID is set to Default. From the dropdown menu, select the location closest to where your users are located
+  - Set up Firestore Database to "Start in production mode" and click __Next__
+  - On the "Rules" tab, adjust "allow read, write: if false;" to "allow read, write: if __true__;". Click Publish to save the changes
+- Navigate to Project Settings (gear icon). Under the General tab, select "Your Apps." Choose a platform to start your app. For this project, I selected Web.
+  ```
+  Project Settings > General Tab > Your Apps > Web ( </> )
+  ```
+  - Name your app and click "Register"
+  - Here you will find your web app's Firebase configuration. Use your configuration details to replace the existing configuration in App.js
+    ```
+    const firebaseConfig = {
+    apiKey: "your-api-key",
+    authDomain: "your-authdomain",
+    projectId: "your-project-id",
+    storageBucket: "your-storage-bucket",
+    messagingSenderId: "your-messaging-sender-id",
+    appId: "your-app-id",
+    };
+    ```
+- Set up Firebase Storage to store images sent via the chat app
+  - From your project dashboard, navigate to the "Build" section and select "Storage" and click the "Get Started" button
+  - A popup will open that asks you to set your cloud storage. Keep everything on default and press __Next__, then __Done__
+  - On the "Rules" tab, adjust "allow read, write: if false;" to "allow read, write: if __true__;". Click Publish to save the changes
+- Navigate to the chat-app folder in the terminal and install Firebase
+  ```
+  npm install firebase
+  ```
+- Download the Expo Go app on your mobile device (or on an emulator like Android Studio) and open the app
   - _Make sure you are connected to WiFi!_
 - In the terminal run __npm start__ or __expo start__ from the project directory
 - You should now be able to use the chat app on your mobile device or emulator
