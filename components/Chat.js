@@ -11,7 +11,7 @@ const Chat = ({route, navigation, db, isConnected, storage}) => {
 const { name, background, userID } = route.params;
 const [messages, setMessages] = useState([]);
 
-// Called when a user sends a message, appends new message to newMessages array, which is then appended to original list of messages
+// Called when a user sends a message. Appends new message to newMessages array, which is then appended to original list of messages
 const onSend = (newMessages) => {
   addDoc(collection(db, "messages"), newMessages[0])
 }
@@ -56,7 +56,7 @@ if (isConnected === true) {
   return () => {
     if (unsubMessages) unsubMessages();
   }
-}, [isConnected]); // Call the callback of useEffect whenewer the isConnected prop's value changes.
+}, [isConnected]); // Call the callback of useEffect whenever the isConnected prop's value changes.
 
 const loadCachedMessages = async () => {
   const cachedMessages = await AsyncStorage.getItem("chat_messages") || [];
@@ -140,10 +140,12 @@ const renderBubble = (props) => {
   />
 };
 
+// ActionSheet menu options to open on button click
 const renderCustomActions = (props) => {
   return <CustomActions userID={userID} storage={storage} {...props} />;
 };
 
+// CustomView to view location in a map
 const renderCustomView = (props) => {
   const { currentMessage} = props;
   if (currentMessage.location) {

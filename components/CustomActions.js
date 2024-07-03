@@ -32,6 +32,7 @@ const CustomActions = ({wrapperStyle, iconTextStyle, onSend, storage, userID}) =
           );
     };
 
+    // Save new images to cloud storage as blobs
     const uploadAndSendImage = async (imageURI) => {
       const uniqueRefString = generateReference(imageURI);
       const newUploadRef = ref(storage, uniqueRefString);
@@ -43,12 +44,14 @@ const CustomActions = ({wrapperStyle, iconTextStyle, onSend, storage, userID}) =
       });
     }
 
+    // Create unique ID for each new photo
     const generateReference = (uri) => {
       const timeStamp = (new Date()).getTime();
       const imageName = uri.split("/")[uri.split("/").length - 1];
       return `${userID}-${timeStamp}-${imageName}`;
     }
 
+    // Choose an image from device library
     const pickImage = async () => {
         let permissions = await ImagePicker.requestMediaLibraryPermissionsAsync();
         
@@ -59,6 +62,7 @@ const CustomActions = ({wrapperStyle, iconTextStyle, onSend, storage, userID}) =
         }
       }
     
+    // Take and upload new photo
     const takePhoto = async () => {
         let permissions = await ImagePicker.requestCameraPermissionsAsync();
 
@@ -69,6 +73,7 @@ const CustomActions = ({wrapperStyle, iconTextStyle, onSend, storage, userID}) =
         }
       }
     
+      // Share device location
       const getLocation = async () => {
         let permissions = await Location.requestForegroundPermissionsAsync();
         //send message with location data needed for renderCustomView to render MapView in Chat.js
